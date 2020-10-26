@@ -47,7 +47,7 @@ has an exit code -1 is returned.`,
 		err := validateCNPs()
 		if err != nil {
 			log.Error(err)
-			os.Exit(-1)
+			os.Exit(1)
 		}
 	},
 }
