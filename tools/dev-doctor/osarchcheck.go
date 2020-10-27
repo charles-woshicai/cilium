@@ -1,0 +1,27 @@
+package main
+
+import "runtime"
+
+// An osArchCheck checks that runtime.GOOS and runtime.GOARCH are supported.
+type osArchCheck struct{}
+
+func (osArchCheck) id() string {
+	return "os-arch"
+}
+
+func (osArchCheck) run() (checkResult, string) {
+	osArch := runtime.GOOS + "/" + runtime.GOARCH
+	switch runtime.GOOS {
+	case "darwin":
+		return checkWarning, osArch
+	case "linux":
+		switch runtime.GOARCH {
+		case "amd64":
+			return checkOK, osArch
+		default:
+			return checkWarning, osArch
+		}
+	default:
+		return checkError, osArch
+	}
+}
